@@ -24,7 +24,7 @@ export default async (req, res) => {
   if (decoded['errors'] != null) {
     var r = decoded['errors'].some(error => error == 'TokenExpiredError');
     if (r) {
-      res.status(403).json({ error: 'server_token_expired' });
+      res.status(401).json({ error: 'server_token_expired' });
     } else {
       res.status(400).json({ error: 'bad_request' });
     }
