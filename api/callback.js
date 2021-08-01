@@ -27,7 +27,7 @@ export default async (req, res) => {
   }
 
   const ecryptedCode = crypto.encrypt(code);
-  const expired = Math.floor(Date.now() / 1000) + 10;
+  const expired = Math.floor(Date.now() / 1000) + 60;
   const token = jwt.encode(ecryptedCode, decoded['aud'], expired, 'ecrypted_code');
 
   const redirectUrl = `${decoded['aud']}?token=${token}&state=${state}`;
