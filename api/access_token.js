@@ -53,13 +53,11 @@ export default async (req, res) => {
 }
 
 const allowCors = (req, res) => {
-  var allowUris = [
-    'https://amongus-tracker.com',
-    'https://edge.amongus-tracker.com',
-    'https://development.amongus-tracker.com'
-  ];
+  var allowUris = [];
   if (env.isDevelopment()) {
     allowUris.push('http://localhost:8080');
+  } else {
+    allowUris.push('https://client.amongus-tracker.com');
   }
   if (!allowUris.includes(req.headers.origin)) {
     return;
