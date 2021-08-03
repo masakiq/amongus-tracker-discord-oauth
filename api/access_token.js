@@ -24,7 +24,7 @@ export default async (req, res) => {
   if (decoded['errors'] != null) {
     var r = decoded['errors'].some(error => error == 'TokenExpiredError');
     if (r) {
-      res.status(403).json({ error: 'server_token_expired' });
+      res.status(401).json({ error: 'server_token_expired' });
     } else {
       res.status(400).json({ error: 'bad_request' });
     }
@@ -53,13 +53,11 @@ export default async (req, res) => {
 }
 
 const allowCors = (req, res) => {
-  var allowUris = [
-    'https://amongus-tracker.com',
-    'https://edge.amongus-tracker.com',
-    'https://development.amongus-tracker.com'
-  ];
+  var allowUris = [];
   if (env.isDevelopment()) {
     allowUris.push('http://localhost:8080');
+  } else {
+    allowUris.push('https://client.amongus-tracker.com');
   }
   if (!allowUris.includes(req.headers.origin)) {
     return;

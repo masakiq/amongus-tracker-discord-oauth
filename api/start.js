@@ -36,18 +36,11 @@ const verifyState = (state) => {
 }
 
 const verifyAud = (aud) => {
-  var allowed = [
-    'https://amongus-tracker.com',
-    'https://edge.amongus-tracker.com',
-    'https://development.amongus-tracker.com',
-    'amongustracker://amongus-tracker.com',
-    'amongustracker://edge.amongus-tracker.com',
-    'amongustracker://development.amongus-tracker.com'
-  ];
+  var allowed = [];
   if (env.isDevelopment()) {
-    allowed.push('http://localhost:3000');
-    allowed.push('http://localhost:8080');
     allowed.push('amongustracker://localhost:8080');
+  } else {
+    allowed.push('amongustracker://client.amongus-tracker.com');
   }
   return allowed.includes(aud);
 }
