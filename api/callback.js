@@ -4,6 +4,7 @@ const crypto = require('../src/crypto');
 export default async (req, res) => {
   const code = req.query.code;
   const state = req.query.state;
+  const error = req.query.error;
   const cookie = req.cookies['state'];
 
   var decoded = jwt.decode(cookie);
@@ -23,6 +24,14 @@ export default async (req, res) => {
   }
   if (state != decoded['sub']) {
     res.redirect(decoded['aud'] + '?error=invalid_state');
+    return;
+  }
+  if (error != null) {
+    if (error == 'invalid_scope') {
+      res.redirect(decoded['aud'] + '?error=invalid_scope');
+    } else {
+      res.redirect(decoded['aud'] + '?error=unknown_error');
+    }
     return;
   }
 
