@@ -44,8 +44,12 @@ export default async (req, res) => {
 
   const redirectUri = getRedirectUri(req);
   requestDiscordToken(code, clientId, clientSecret, redirectUri).then(data => {
-    data['expired_at'] = Math.floor(Date.now() / 1000) + data.expires_in;
-    res.status(200).json(data);
+    if (data.error == 'invalid_client') {
+      res.status(401).json({ error: 'invalid_secret' });
+    } else {
+      data['expired_at'] = Math.floor(Date.now() / 1000) + data.expires_in;
+      res.status(200).json(data);
+    }
   }).catch(err => {
     console.log(err);
     res.status(400).json('');
