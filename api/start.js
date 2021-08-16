@@ -37,11 +37,7 @@ const verifyState = (state) => {
 
 const verifyAud = (aud) => {
   var allowed = [];
-  if (env.isDevelopment()) {
-    allowed.push('amongustracker://localhost:8080');
-  } else {
-    allowed.push('amongustracker://client.amongus-tracker.com');
-  }
+  allowed.push('http://localhost:6474/oauth/callback');
   return allowed.includes(aud);
 }
 
